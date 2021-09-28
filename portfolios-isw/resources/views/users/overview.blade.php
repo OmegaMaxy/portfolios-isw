@@ -2,7 +2,7 @@
     <head></head>
     <body>
         <section>
-            <h1>Welcome to Portfolios!</h1>
+            <h1>User Overview!</h1>
             <p>Description here..</p>
         </section>
         <section>
@@ -13,7 +13,7 @@
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->fname }}</td>
                             <td>{{ $user->role->name }}</td>
-                            <td>{{ $user->page-> }}</td>
+                            <td>{{ $user->page->url }}</td>
                         </tr>
                     @endforeach
                 </tbody>

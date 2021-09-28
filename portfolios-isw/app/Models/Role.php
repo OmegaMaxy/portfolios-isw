@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
+
+    public function userAmount()
+    {
+        return User::where('role_id', $this->role_id)->get()->count();
+    }
 }
