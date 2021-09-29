@@ -13,4 +13,9 @@ class Role extends Model
     {
         return User::where('role_id', $this->role_id)->get()->count();
     }
+
+    public function linkPath()
+    {
+        return "/roles/" . $this->roleId;
+    }
 }
