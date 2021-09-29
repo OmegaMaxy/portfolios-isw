@@ -6,10 +6,11 @@
             <h3>Role Overview</h3>
         </section>
         <section>
-            <table class="table table-striped">
+            <table>
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Description</th>
                         <th>Amount of users</th>
                         <th>Hierarchy</th>
                     </tr>
@@ -17,14 +18,14 @@
                 <tbody>
                     @foreach ($roles as $role)
                         <tr>
-                            <td><a href="{{ $role->linkPath() }}">{{ $role->name }}</a></td>
-                            <td>{{ $role->userAmount() }} users</td>
+                            <td>{{ $role->name }}</td>
+                            <td>{{ $role->description }}</td>
+                            <td>{{ $role->userAmount() }}</td>
                             <td>{{ $role->role_number }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <a href="{{ url('/roles/create') }}" class="btn btn-primary">Add role</a>
         </section>
     </section>
 @endsection
