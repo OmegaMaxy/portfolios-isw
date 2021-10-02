@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Models\Role;
+use \App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
     public function index()
     {
+        // delete notification should be received here
         $roles = Role::all();
         return view('roles.overview', ['roles' => $roles]);
     }
@@ -54,7 +56,17 @@ class RoleController extends Controller
     }
     public function destroy($roleId)
     {
-        Role::findOrFail($roleId)->delete();
-        return redirect('/roles/');
+        $usersWithThisRole = User::where('role_id', $roleId)->get();
+        if ($usersWithThisRole->isEmpty()) {
+            Role::findOrFail($roleId)->delete();
+            return redirect('/roles/');
+        } else {
+            /*
+                With notification
+                'Cannot delete role.
+                There are still users with this role.'
+            */
+            return redirect('/roles/' . $roleId);
+        }
     }
 }
