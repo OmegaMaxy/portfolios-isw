@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function show($roleId)
     {
         $role = Role::findOrFail($roleId);
-        return view('roles.view', compact($role));
+        return view('roles.show', ['role' => $role]);
     }
     public function validator(array $data)
     {
@@ -28,7 +28,8 @@ class RoleController extends Controller
     }
     public function create()
     {
-        return view('roles.create');
+        $role = Role::all()->sortDesc()[0];
+        return view('roles.create', ['last_role' => $role]);
     }
     public function store()
     {
@@ -43,16 +44,17 @@ class RoleController extends Controller
     }
     public function update($roleId)
     {
+        $this->validator(request()->all())->validate();
         $role = Role::findOrFail($roleId);
         $role->name = request()['name'];
         $role->role_number = request()['role_number'];
         $role->description = request()['description'];
         $role->save();
-        return $this->show($roleId);
+        return redirect('/roles/' . $roleId);
     }
     public function destroy($roleId)
     {
-        Role::findOrFail($roleId)->destroy();
-        return $this->index();
+        Role::findOrFail($roleId)->delete();
+        return redirect('/roles/');
     }
 }

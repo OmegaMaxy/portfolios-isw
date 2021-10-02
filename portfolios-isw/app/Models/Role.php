@@ -16,6 +16,6 @@ class Role extends Model
 
     public function linkPath()
     {
-        return "/roles/" . $this->roleId;
+        return "/roles/" . $this->id;
     }
 }
