@@ -24,7 +24,7 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique(),
+            'name' => $this->faker->name(), // actually needs to be unique
             'role_number' => self::$roleNr++,
             'description' => $this->faker->text(),
         ];
