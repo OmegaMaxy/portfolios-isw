@@ -4,18 +4,18 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Create Continent') }}</div>
+            <div class="card mt-5">
+                <div class="card-header">{{ __('Create Role') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ url('admin/continents') }}">
+                    <form method="POST" action="{{ url('roles') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Continent Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="off" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Members" autocomplete="off" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -25,12 +25,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="income_rate" class="col-md-4 col-form-label text-md-right">{{ __('Income Rate %') }}</label>
+                            <label for="role_number" class="col-md-4 col-form-label text-md-right">{{ __('Role number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="income_rate" type="text" class="form-control @error('income_rate') is-invalid @enderror" name="income_rate" value="{{ old('income_rate') }}" autocomplete="off">
+                                <input id="role_number" type="text" class="form-control @error('role_number') is-invalid @enderror" name="role_number" value="{{ $last_role->role_number + 1 }}" disabled>
 
-                                @error('income_rate')
+                                @error('role_number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" autocomplete="off">
+
+                                @error('role_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

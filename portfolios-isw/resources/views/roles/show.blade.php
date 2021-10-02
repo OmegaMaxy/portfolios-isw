@@ -5,27 +5,19 @@
         <section>
             <h3>Role Overview</h3>
         </section>
-        <section>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Amount of users</th>
-                        <th>Hierarchy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($roles as $role)
-                        <tr>
-                            <td>{{ $role->name }}</td>
-                            <td>{{ $role->description }}</td>
-                            <td>{{ $role->userAmount() }}</td>
-                            <td>{{ $role->role_number }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <section class="mt-4 mb-3">
+            <div class="card card-body">
+                <h3>{{ $role->name }} <div class="btn btn-default">Level <span class="badge badge-light">{{ $role->role_number }}</span></div></h3>
+                <p>{{ $role->description }}</p>
+                <p>{{ $role->userAmount() }} users with this role.</p>
+            </div>
+
+
         </section>
+        <form action="{{ url($role->linkPath()) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Delete role</button>
+        </form>
     </section>
 @endsection
