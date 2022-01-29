@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,8 +19,12 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
+        'user_id',
+        'username',
+        'fname',
+        'lname',
+        'role_id',
+        'email_address',
         'password',
     ];
 
@@ -43,6 +48,30 @@ class User extends Authenticatable
     ];
     public function linkPath()
     {
-        return "/roles/" . $this->roleId;
+        return "/users/" . $this->id;
+    }
+    public function fullname()
+    {
+        return $this->fname . " " . $this->lname;
+    }
+    public function pages()
+    {
+        return $this->hasMany(Page::class);
+    }
+    public function activePage()
+    {
+        $activePage = Page::select('*')
+            //->with('users')
+            ->join('users', function ($join) {
+                $join->on('pages.user_id', '=', 'users.id');
+            })
+            ->where('user_id', $this->id)
+            ->where('status', '1')
+            ->first();
+        return $activePage;
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

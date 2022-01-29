@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers as Controllers;
 
 Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
 
-Route::get('/users/{userId}', [Controllers\UserController::class, 'show'])->name('users');
-Route::get('/users', [Controllers\UserController::class, 'index'])->name('users');
+Route::resource('users', Controllers\UserController::class)
+    ->missing(redirect('users.overview'));
 
 /*
 Route::get('/roles/{roleId}', [App\Http\Controllers\RoleController::class, 'show']);
@@ -19,12 +21,12 @@ Route::patch('/roles/{roleId}', [App\Http\Controllers\RoleController::class, 'up
 Route::delete('/roles/{roleId}', [App\Http\Controllers\RoleController::class, 'destroy']);*/
 
 Route::resource('roles', Controllers\RoleController::class)
-    ->missing(redirect('roles.index'));
+    ->missing(redirect('roles.overview'));
 
 
-Route::get('/pages/{pageId}', [Controllers\PageController::class, 'show']);
-Route::get('/pages', [Controllers\PageController::class, 'index'])->name('pages');
+Route::resource('pages', Controllers\PageController::class)
+    //->except('')
+    ->missing(redirect('users.overview'));
 
-Auth::routes();
-
-Route::get('/home', [Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/users/{userId}/page/add', [Controllers\PageController::class, 'create_with_userid']);
+Route::get('/users/{userId}/page', [Controllers\PageController::class, 'show']);
