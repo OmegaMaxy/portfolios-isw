@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ot.css') }}" rel="stylesheet">
 </head>
 <body class="shop">
     <div id="app" style="height:100vh; height: -webkit-fill-available;overflow-x: auto;overflow-y: hidden;">
