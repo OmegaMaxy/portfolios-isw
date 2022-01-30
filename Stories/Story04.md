@@ -4,7 +4,7 @@ The main use of the application is to display members of an organisation and the
 
 ### Options:
 - Admin does manual entry for each user
-- Users can signup themselves
+- ✔ Users can signup themselves
 - - username
 - - firstname
 - - lastname
