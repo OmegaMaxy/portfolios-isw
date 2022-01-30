@@ -15,20 +15,15 @@
                     </p>
                 </div>
             </section>
+            @if($errors->any())
+                {!! implode('', $errors->all('<div class="alert alert-danger" role="alert">:message</div>')) !!}
+            @endif
             <p>Big background image here.</p>
             <h1>Title here - ISW Portfolios</h1>
             <p>Scroll a bit further for an overview</p>
             <section>
                 @forelse ($users as $user)
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUHNoKb6n8cRAjyputJ9vn4OPdujzLJr52OQ&usqp=CAU" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $user->fullname() }}</h5>
-                            <p class="card-text">{{ $user->username }} <label class="badge badge-primary">{{ $user->role->name }}</label></p>
-
-                            <a href="#their-page" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
+                    <x-user-tile :user="$user"/>
                 @empty
                     <p>There are no portfolios to view right now.</p>
                 @endforelse
