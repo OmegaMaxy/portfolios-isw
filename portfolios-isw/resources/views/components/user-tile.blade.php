@@ -1,4 +1,4 @@
-<div>
+<div class="mr-2 mb-2">
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUHNoKb6n8cRAjyputJ9vn4OPdujzLJr52OQ&usqp=CAU" alt="Card image cap">
         <div class="card-body">

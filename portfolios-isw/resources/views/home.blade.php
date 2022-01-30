@@ -21,7 +21,7 @@
             <p>Big background image here.</p>
             <h1>Title here - ISW Portfolios</h1>
             <p>Scroll a bit further for an overview</p>
-            <section>
+            <section class="d-flex" style="flex-wrap: wrap;justify-content: center;">
                 @forelse ($users as $user)
                     <x-user-tile :user="$user"/>
                 @empty
