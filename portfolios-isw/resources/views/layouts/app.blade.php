@@ -40,6 +40,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/users') }}">Explore</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/faq') }}">FAQ</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -30,6 +30,9 @@ Route::prefix('admin')->group(
 
 Auth::routes();
 Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/faq', function() {
+    return view('faq');
+});
 
 Route::get('users', [Controllers\UserController::class, 'index']);
 Route::get('/profile/{username}', [Controllers\UserController::class, 'show']);
