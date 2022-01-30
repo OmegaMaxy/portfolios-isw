@@ -8,18 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class UserController extends \App\Http\Controllers\Controller
 {
     public function index()
     {
         // delete notification should be received here
         $users = User::all();
-        return view('users.overview', ['users' => $users]);
+        return view('admin.users.overview', ['users' => $users]);
     }
     public function show($userId)
     {
         $user = User::findOrFail($userId);
-        return view('users.show', ['user' => $user]);
+        return view('admin.users.show', ['user' => $user]);
     }
     public function validator(array $data)
     {
@@ -35,7 +35,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = \App\Models\Role::all();
-        return view('users.create', compact('roles'));
+        return view('admin.users.create', compact('roles'));
     }
     public function store()
     {
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function edit($userId)
     {
         $user = User::findOrFail($userId);
-        return view('users.edit', compact($user));
+        return view('admin.users.edit', compact($user));
     }
     public function update($userId)
     {

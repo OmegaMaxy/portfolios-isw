@@ -8,18 +8,18 @@ use \App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class RoleController extends Controller
+class RoleController extends \App\Http\Controllers\Controller
 {
     public function index()
     {
         // delete notification should be received here
         $roles = Role::all()->sortBy('role_number');
-        return view('roles.overview', ['roles' => $roles]);
+        return view('admin.roles.overview', ['roles' => $roles]);
     }
     public function show($roleId)
     {
         $role = Role::findOrFail($roleId);
-        return view('roles.show', ['role' => $role]);
+        return view('admin.roles.show', ['role' => $role]);
     }
     public function validator(array $data)
     {
@@ -34,7 +34,7 @@ class RoleController extends Controller
         // TODO: only select one with highest role number
         $role = DB::table('roles')->latest('created_at')->first();
         $role_number = ($role == null) ? 0 : $role->role_number;
-        return view('roles.create', ['last_role_number' => $role_number]);
+        return view('admin.roles.create', ['last_role_number' => $role_number]);
     }
     public function store()
     {
@@ -46,7 +46,7 @@ class RoleController extends Controller
     public function edit($roleId)
     {
         $role = Role::findOrFail($roleId);
-        return view('roles.edit', compact($role));
+        return view('admin.roles.edit', compact($role));
     }
     public function update($roleId)
     {

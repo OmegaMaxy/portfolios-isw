@@ -50,9 +50,13 @@ class User extends Authenticatable
     {
         return "/users/" . $this->id;
     }
+    public function linkPathAdmin()
+    {
+        return "/admin/users/" . $this->id;
+    }
     public function fullname()
     {
-        return $this->fname . " " . $this->lname;
+        return ucfirst($this->fname) . " " . ucfirst($this->lname);
     }
     public function pages()
     {
@@ -67,7 +71,7 @@ class User extends Authenticatable
             })
             ->where('user_id', $this->id)
             ->where('status', '1')
-            ->first();
+            ->first(); // first() might give an error
         return $activePage;
     }
     public function role()

@@ -1,20 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.admin_copy')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container-fluid mt-4">
+    <div class="row ">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    <section>
+                        <h1>Welcome to Portfolios!</h1>
+                        <p>Description here..</p>
+                    </section>
+                    <section>
+                        <a href="/admin/users/">Users</a>
+                        <a href="/admin/roles/">Roles</a>
+                    </section>
                 </div>
             </div>
         </div>

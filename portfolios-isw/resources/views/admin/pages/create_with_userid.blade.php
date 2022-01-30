@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <a href="{{ url('users/'.$userId) }}" class="btn btn-primary mt-5">Go back to user</a>
+            <a href="{{ url('/admin/users/'.$userId) }}" class="btn btn-primary mt-5">Go back to user</a>
             <div class="card mt-2">
                 <div class="card-header">{{ __('Add Page') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ url('pages') }}">
+                    <form method="POST" action="{{ url('admin/users/'.$userId.'/page') }}">
                         @csrf
 
                         <input type="hidden" name="user_id" value="{{ $userId }}">

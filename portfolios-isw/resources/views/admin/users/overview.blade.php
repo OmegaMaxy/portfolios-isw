@@ -18,7 +18,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->username }}<a href="{{ $user->linkPath() }}" class="ml-2 badge badge-primary">Details</a></td>
+                            <td>{{ $user->username }}<a href="{{ $user->linkPathAdmin() }}" class="ml-2 badge badge-primary">Details</a></td>
                             <td>{{ $user->fullname() }}</td>
                             <td>{{ $user->role->name }}</td>
                             @if ($user->activePage() != null)
