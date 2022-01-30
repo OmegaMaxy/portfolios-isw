@@ -3,7 +3,7 @@
 @section('content')
     <section class="container-fluid mt-3">
         <section>
-            <h3>Role Overview</h3>
+            <h3>Roles</h3>
         </section>
         <section>
             <table class="table table-striped">
