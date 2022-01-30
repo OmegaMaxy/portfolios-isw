@@ -38,7 +38,13 @@
                             <a class="nav-link" href="{{ url('/') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/users') }}">Explore</a>
+                            <a class="nav-link" href="{{ url('users/') }}">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('roles/') }}">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('pages/') }}">Pages</a>
                         </li>
                     </ul>
 
