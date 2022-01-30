@@ -6,6 +6,7 @@ use \App\Http\Controllers as Controllers;
 
 Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
 
 Route::resource('users', Controllers\UserController::class)

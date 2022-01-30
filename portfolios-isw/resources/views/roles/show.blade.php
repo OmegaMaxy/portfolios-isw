@@ -19,6 +19,11 @@
         </section>
         <form action="{{ url($role->linkPath()) }}" method="POST">
             @csrf
+
+            @if($errors->any())
+                {!! implode('', $errors->all('<div class="alert alert-danger" role="alert">:message</div>')) !!}
+            @endif
+
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Delete role</button>
         </form>
