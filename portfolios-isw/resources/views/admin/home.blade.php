@@ -15,6 +15,7 @@
                     <section>
                         <a href="/admin/users/">Users</a>
                         <a href="/admin/roles/">Roles</a>
+                        <a href="/admin/invites/">Invites</a>
                     </section>
                 </div>
             </div>

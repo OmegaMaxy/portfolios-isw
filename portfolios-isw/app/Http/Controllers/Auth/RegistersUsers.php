@@ -20,6 +20,9 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
+        if (request()['inviteHash'] == null) {
+            return redirect('/')->withErrors(['msg' => 'Sorry, you need an invite link to register!']);
+        }
         return view('auth.register');
     }
 

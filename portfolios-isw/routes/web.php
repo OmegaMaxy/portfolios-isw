@@ -26,6 +26,8 @@ Route::prefix('admin')->group(
         Route::post('/users/{userId}/page', [Controllers\Admin\PageController::class, 'store']);
         Route::get('/users/{userId}/page', [Controllers\Admin\PageController::class, 'show']);
         Route::post('/users/{userId}/page/change-status', [Controllers\Admin\PageController::class, 'change_status']);
+
+        Route::resource('invites', Controllers\Admin\InviteController::class)->only(['index', 'destroy', 'store']);
     });
 
 Auth::routes();
@@ -40,3 +42,7 @@ Route::get('/profile/{username}', [Controllers\UserController::class, 'show']);
 Route::get('/account', [Controllers\AccountController::class, 'index'])->name('account');
 Route::post('/account/create-page', [Controllers\AccountController::class, 'create_page']);
 Route::delete('/account/delete-page/{pageId}', [Controllers\AccountController::class, 'delete_page']);
+
+Route::get('/invite/{hash}', function($inviteHash) {
+    return view('auth.register', compact('inviteHash'));
+});

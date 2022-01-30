@@ -50,10 +50,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'invite_hash' => ['required', 'string'],
             'username' => ['required', 'string', 'min:3', 'max:50', 'unique:users'],
             'fname' => ['required', 'string', 'min:2', 'max:50'],
             'lname' => ['required', 'string', 'min:2', 'max:100'],
             'password' => ['required','string', 'min:8', 'confirmed']
+        ], [
+            'invite_hash.required' => 'Sorry, you need an invite link to register!',
         ]);
     }
 
@@ -65,6 +68,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $invite = \App\Models\Invite::where('hash', $data['invite_hash'])->get()->first();
+        if ($invite == null || !$invite->usable()) return redirect('/register')->withErrors(['msg' => 'Invite link is not valid, or cannot be used anymore.']);
+        $invite->subtractUse(1);
+
         $role = DB::table('roles')->latest('created_at')->first();
         if ($role == null || $role->role_number == 1) return redirect('/register')->withErrors(['msg' => 'Signup failed. Administrator has not finished setting up this application. Please contact your administrator for furthur instructions.']);
         $lowest_role = $role->id;
