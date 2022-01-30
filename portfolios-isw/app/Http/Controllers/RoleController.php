@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use \App\Models\Role;
 use \App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
     public function index()
     {
         // delete notification should be received here
-        $roles = Role::all();
+        $roles = Role::all()->sortBy('role_number');
         return view('roles.overview', ['roles' => $roles]);
     }
     public function show($roleId)
@@ -30,14 +31,17 @@ class RoleController extends Controller
     }
     public function create()
     {
-        $role = Role::all()->sortDesc()[0];
-        return view('roles.create', ['last_role' => $role]);
+        // TODO: only select one with highest role number
+        $role = DB::table('roles')->latest('created_at')->first();
+        $role_number = ($role == null) ? 0 : $role->role_number;
+        return view('roles.create', ['last_role_number' => $role_number]);
     }
     public function store()
     {
         $data = request()->all();
-        $this->validator($data)->validate();
-        return redirect('/roles/' . Role::create($data)->id);
+        $data = $this->validator($data)->validate();
+        Role::create($data);
+        return redirect('/roles');
     }
     public function edit($roleId)
     {

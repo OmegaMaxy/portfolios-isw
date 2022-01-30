@@ -28,8 +28,8 @@
                             <label for="role_number" class="col-md-4 col-form-label text-md-right">{{ __('Role number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="role_number" type="text" class="form-control @error('role_number') is-invalid @enderror" name="role_number" value="{{ $last_role->role_number + 1 }}" disabled>
-
+                                <input id="role_number" type="number" class="form-control @error('role_number') is-invalid @enderror" name="role_number" value="{{ $last_role_number + 1 }}">
+                                <p class="text-secondary">Number in hierarchy, top starts at 1.</p>
                                 @error('role_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -42,7 +42,7 @@
 
                             <div class="col-md-6">
                                 <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" autocomplete="off">
-
+                                <p class="text-secondary">Optional</p>
                                 @error('role_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
