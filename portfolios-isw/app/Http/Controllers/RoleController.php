@@ -65,12 +65,7 @@ class RoleController extends Controller
             Role::findOrFail($roleId)->delete();
             return redirect('/roles/');
         } else {
-            /*
-                With notification
-                'Cannot delete role.
-                There are still users with this role.'
-            */
-            return redirect('/roles/' . $roleId);
+            return redirect('/roles/' . $roleId)->withErrors(['msg' => 'Cannot delete role. There are still users with this role.']);;
         }
     }
 }
