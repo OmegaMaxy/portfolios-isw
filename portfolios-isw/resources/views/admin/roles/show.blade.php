@@ -8,7 +8,7 @@
         <section class="mt-4 mb-3">
             <div class="card">
                 <div class="card-body"> <!-- max-width: 60%; on PC, leave default on mobile-->
-                    <h3>{{ $role->name }} <div class="btn btn-default">Level <span class="badge badge-light">{{ $role->role_number }}</span></div></h3>
+                    <h3>{{ $role->name }} <div class="btn btn-default" title="Level {{ $role->role_number }} in hierarchy">Level <span class="badge badge-light">{{ $role->role_number }}</span></div></h3>
                     <p>{{ $role->description }}</p>
                     <p>{{ $role->userAmount() }} users with this role.</p>
                 </div>
