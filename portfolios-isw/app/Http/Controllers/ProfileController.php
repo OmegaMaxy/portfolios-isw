@@ -57,7 +57,21 @@ class ProfileController extends Controller
         }
         return redirect('/profile/customize');
     }
-    public function change_background() {
+    public function change_background_color() {
+        $user = auth()->user();
+
+        // business logic here
+        request()->validate([
+            'background_color' => ['required', 'string', 'max:50'],
+        ]);
+
+        $user->background_color = request()['background_color'];
+        $user->save();
+        return redirect('/profile/customize')->with('a', 'a');
+    }
+
+    public function change_background_image()
+    {
         $user = auth()->user();
 
         // business logic here

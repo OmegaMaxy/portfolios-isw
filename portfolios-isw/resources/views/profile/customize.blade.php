@@ -42,7 +42,7 @@
                             @method('PATCH')
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
-                        <form class="mb-2" method="POST" action="{{ url('/account/upload-image') }}" enctype="multipart/form-data">
+                        <form class="mb-2" method="POST" action="{{ url('/profile/customize/upload-image') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -67,13 +67,40 @@
                             </div>
                         </form>
                         @if (!empty(auth()->user()->profile_picture))
-                            <form method="POST" action="{{ url('/account/delete-image') }}">
+                            <form method="POST" action="{{ url('/profile/customize/delete-image') }}">
                                 @csrf
-                                <img src="{{ auth()->user()->pf() }}" alt="Your profile picture" class="mb-3 mt-3" style="height: 5rem;border:2px solid black;display: block;">
+                                <img src="{{ auth()->user()->pf() }}" alt="Your profile picture" class="mb-3 mt-3" style="height: 5rem;border:2px solid gray;display: block;">
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete profile picture</button>
                             </form>
                         @endif
+                    </section>
+                    <section class="mt-5">
+                        <h1></h1>
+                        <form class="mb-2" action="{{ url('/profile/customize/handle/twitter') }}" method="POST" style="max-width: 15rem;">
+                            @csrf
+
+                            @method('PATCH')
+                            @if($errors->any())
+                                {!! implode('', $errors->all('<div class="alert alert-danger" role="alert">:message</div>')) !!}
+                            @endif
+
+                            <div class="form-group">
+                                <label for="handle" class="">{{ __('Twitter') }}</label>
+
+                                <div class="">
+                                    <input id="handle" type="text" class="form-control @error('handle') is-invalid @enderror" name="handle" value="{{ auth()->user()->handles->twitter_handle }}" required placeholder="donaldtrump" autocomplete="off">
+
+                                    @error('handle')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
                     </section>
                 </div>
             </div>

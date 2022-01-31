@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/profile/customize', [Controllers\ProfileController::class, 'index']);
-    Route::patch('/profile/customize/change-background', [Controllers\ProfileController::class, 'change_background']);
+    Route::patch('/profile/customize/change-background', [Controllers\ProfileController::class, 'change_background_color']);
+    Route::patch('/profile/customize/change-background', [Controllers\ProfileController::class, 'change_background_image']);
     Route::post('/profile/customize/upload-image', [Controllers\ProfileController::class, 'upload_profile_picture']);
     Route::get('/profile/{username}', [Controllers\UserController::class, 'show']);
 
