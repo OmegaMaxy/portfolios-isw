@@ -3,4 +3,4 @@ The tiles in the user overviews contain default profile picture, they could be c
 Examples: their face, gravatar, or favourite image.
 
 The admin will be able to set a default image.
-The admin also has to upload their own image as hero image.
+The admin also has to be able upload their own image as hero image.  This will be done in the admin panel.
