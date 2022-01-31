@@ -89,7 +89,7 @@
                                 <label for="handle" class="">{{ __('Twitter') }}</label>
 
                                 <div class="">
-                                    <input id="handle" type="text" class="form-control @error('handle') is-invalid @enderror" name="handle" value="{{ auth()->user()->handles->twitter_handle }}" required placeholder="donaldtrump" autocomplete="off">
+                                    <input id="handle" type="text" class="form-control @error('handle') is-invalid @enderror" name="handle" value="{{ $handles->twitter_handle }}" required placeholder="donaldtrump" autocomplete="off">
 
                                     @error('handle')
                                         <span class="invalid-feedback" role="alert">

@@ -84,6 +84,6 @@ class User extends Authenticatable
         return '/storage/'.$this->profile_picture;
     }
     public function handles() {
-        return $this->hasOne(Handles::class, 'user_id');
+        return $this->hasOne(Handles::class, 'id', 'user_id');
     }
 }

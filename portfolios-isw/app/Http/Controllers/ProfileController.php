@@ -11,7 +11,18 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile.customize');
+        $handles = auth()->user()->handles;
+        if ($handles == null) {
+            $handles = [
+                'twitter_handle' => '',
+                'linkedin_handle' => '',
+                'spotify_handle' => '',
+                'discord_handle' => '',
+                'github_handle' => '',
+                'website' => '',
+            ];
+        }
+        return view('profile.customize', compact('handles'));
     }
     public function validator(array $data)
     {
