@@ -44,14 +44,20 @@ Route::get('/invite/{hash}', function ($inviteHash) {
 
 Route::middleware(['auth'])->group(function () {
 
+
+    Route::get('/profile/pages', [Controllers\PageController::class, 'index']);
+    Route::post('/profile/pages', [Controllers\PageController::class, 'store']);
+    Route::delete('/profile/pages/{pageId}', [Controllers\PageController::class, 'destroy']);
+    Route::post('/profile/pages/change-status', [Controllers\PageController::class, 'change_status']);
+
+
+
+    Route::get('/profile/customize', [Controllers\PageController::class, 'customize']);
+    Route::post('/profile/change-background', [Controllers\PageController::class, 'change_background']);
+    Route::post('/profile/upload-image', [Controllers\PageController::class, 'upload_profile_picture']);
     Route::get('/profile/{username}', [Controllers\UserController::class, 'show']);
 
-    Route::resource('account.pages', Controllers\PageController::class)->only(['index', 'store', 'destroy']);
-
-    /*Route::get('/account', [Controllers\AccountController::class, 'index'])->name('account');
-Route::post('/account/create-page', [Controllers\AccountController::class, 'create_page']);
-Route::delete('/account/delete-page/{pageId}', [Controllers\AccountController::class, 'delete_page']);*/
-
     Route::get('/account', [Controllers\AccountController::class, 'index'])->name('account');
-    Route::post('/account/upload-image', [Controllers\AccountController::class, 'upload_profile_picture']);
+
+    //Route::get('/profile', [Controllers\AccountController::class, 'index'])
 });
