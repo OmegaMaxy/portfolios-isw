@@ -22,9 +22,10 @@ class AccountController extends Controller
     }
     public function delete_profile_picture() {
 
+        $user = User::findOrFail(auth()->user()->id);
+
         Storage::delete('public/' . $user->profile_picture);
 
-        $user = User::findOrFail(auth()->user()->id);
         $user->profile_picture = '';
         $user->save();
 
