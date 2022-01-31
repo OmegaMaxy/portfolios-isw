@@ -17,10 +17,6 @@ class PageController extends Controller
         }
         return view('profile.pages', compact('pages', 'warnings'));
     }
-    public function customize()
-    {
-        return view('profile.customize');
-    }
     public function validator(array $data)
     {
         return Validator::make($data, [

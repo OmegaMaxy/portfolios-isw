@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class AccountController extends Controller
+class ProfileController extends Controller
 {
     public function index()
     {
-        return view('account.index');
+        return view('profile.customize');
     }
     public function validator(array $data)
     {
@@ -32,7 +32,7 @@ class AccountController extends Controller
         $user->profile_picture = '';
         $user->save();
 
-        return redirect('/account');
+        return redirect('/profile/customize');
     }
 
     public function upload_profile_picture()
@@ -55,7 +55,7 @@ class AccountController extends Controller
             $user->profile_picture = 'profile_pictures/' . $filename;
             $user->save();
         }
-        return redirect('/account');
+        return redirect('/profile/customize');
     }
     public function change_background() {
         $user = auth()->user();
