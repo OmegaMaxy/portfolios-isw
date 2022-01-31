@@ -22,9 +22,9 @@
                             <td>{{ $user->fullname() }}</td>
                             <td>{{ $user->role->name }}</td>
                             @if ($user->activePage() != null)
-                                <td><a href="{{ $user->activePage()->page_url }}" target="_blank">{{ $user->activePage()->page_url }}</a></td>
+                                <td><span class="ot-dot ot-green-dot"></span> <a href="/profile/{{ $user->username }}" target="_blank">profile/{{ $user->username }}</a></td>
                             @else
-                                <td>User has no active page.</td>
+                                <td><span class="ot-dot ot-red-dot"></span> User has no active page.</td>
                             @endif
                         </tr>
                     @endforeach
