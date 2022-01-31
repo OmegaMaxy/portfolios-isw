@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Handles extends Model
 {
     use HasFactory;
+    protected $table = 'handles';
 
     public function user() {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 }
