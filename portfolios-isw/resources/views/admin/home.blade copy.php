@@ -1,8 +1,8 @@
-@extends('layouts.admin')
+@extends('layouts.admin_copy')
 
 @section('content')
-<div class="container mt-4">
-    <div class="row">
+<div class="container-fluid mt-4">
+    <div class="row ">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
