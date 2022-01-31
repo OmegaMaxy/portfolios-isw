@@ -4,5 +4,6 @@ This is where /profile/customize comes in play.
 
 Users should be able to:
 - set page background color
+- (maybe) set page background image
 - set their profile picture
 - add their handles
