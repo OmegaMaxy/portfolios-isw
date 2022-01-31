@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <section class="container-fluid mt-3">
@@ -24,7 +24,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <a href="{{ url('/roles/create') }}" class="btn btn-primary">Add role</a>
+            <a href="{{ url('/admin/roles/create') }}" class="btn btn-primary">Add role</a>
         </section>
     </section>
 @endsection

@@ -16,7 +16,7 @@ class Role extends Model
 
     public function linkPath()
     {
-        return "/roles/" . $this->id;
+        return "/admin/roles/" . $this->id;
     }
     public function users()
     {

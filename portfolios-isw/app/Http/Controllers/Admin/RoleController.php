@@ -7,6 +7,7 @@ use \App\Models\Role;
 use \App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class RoleController extends \App\Http\Controllers\Controller
 {
@@ -21,13 +22,21 @@ class RoleController extends \App\Http\Controllers\Controller
         $role = Role::findOrFail($roleId);
         return view('admin.roles.show', ['role' => $role]);
     }
-    public function validator(array $data)
+    public function validator(array $data, bool $isUpdate)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'min:3', 'max:50', 'unique:roles'],
-            'role_number' => ['required', 'min:1', 'unique:roles'],
-            'description' => ['nullable', 'max: 255'],
-        ]);
+        if ($isUpdate) {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'min:3', 'max:50', Rule::unique('roles')->ignore($data['id'])],
+                'role_number' => ['required', 'min:1', Rule::unique('roles')->ignore($data['id'])],
+                'description' => ['nullable', 'max: 255'],
+            ]);
+        } else {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'min:3', 'max:50', 'unique:roles'],
+                'role_number' => ['required', 'min:1', 'unique:roles'],
+                'description' => ['nullable', 'max: 255'],
+            ]);
+        }
     }
     public function create()
     {
@@ -39,9 +48,9 @@ class RoleController extends \App\Http\Controllers\Controller
     public function store()
     {
         $data = request()->all();
-        $data = $this->validator($data)->validate();
+        $data = $this->validator($data, false)->validate();
         Role::create($data);
-        return redirect('/roles');
+        return redirect('/admin/roles');
     }
     public function edit($roleId)
     {
@@ -50,22 +59,30 @@ class RoleController extends \App\Http\Controllers\Controller
     }
     public function update($roleId)
     {
-        $this->validator(request()->all())->validate();
+
+        $data = request()->all();
+        $data['id'] = $roleId;
+
         $role = Role::findOrFail($roleId);
+        if ($role->role_number == 1) $data['role_number'] = 1;
+
+        $this->validator($data, true)->validate();
+
         $role->name = request()['name'];
-        $role->role_number = request()['role_number'];
+        $role->role_number = ($role->role_number == 1) ? 1 : request()['role_number'];
+
         $role->description = request()['description'];
         $role->save();
-        return redirect('/roles/' . $roleId);
+        return redirect('/admin/roles/' . $roleId);
     }
     public function destroy($roleId)
     {
         $usersWithThisRole = User::where('role_id', $roleId)->get();
         if ($usersWithThisRole->isEmpty()) {
             Role::findOrFail($roleId)->delete();
-            return redirect('/roles/');
+            return redirect('/admin/roles/');
         } else {
-            return redirect('/roles/' . $roleId)->withErrors(['msg' => 'Cannot delete role. There are still users with this role.']);;
+            return redirect('/admin/roles/' . $roleId)->withErrors(['msg' => 'Cannot delete role. There are still users with this role.']);;
         }
     }
 }
