@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
     public function index() {
-        $pages = auth()->user()->pages;
-        return view('account.index', compact('pages'));
+        return view('account.index');
     }
     public function validator(array $data)
     {
@@ -17,26 +18,39 @@ class AccountController extends Controller
             'page_url' => ['required', 'string'],
         ]);
     }
-    public function create_page() {
-        $data = request()->all();
+    public function store() {
+    }
+    public function delete_profile_picture() {
 
-        $this->validator($data)->validate();
-        $data['user_id'] = auth()->user()->id;
-        $data['status'] = array_key_exists('status', $data);
+        Storage::delete('public/' . $user->profile_picture);
 
-        // only one page can be active
-        $results = auth()->user()->pages->where('status', 1);
-        if ($results->count() > 0) return redirect('/account')->withErrors(['msg' => 'Only one page can be active!']);
-        \App\Models\Page::create($data);
+        $user = User::findOrFail(auth()->user()->id);
+        $user->profile_picture = '';
+        $user->save();
+
         return redirect('/account');
     }
-    public function delete_page($pageId) {
-        $page = \App\Models\Page::findOrFail($pageId);
-        if ($page->user->id != auth()->user()->id) {
-            redirect('/account')->withErrors(['msg' => 'You are not authorized to delete that.']);
-        }
 
-        $page->delete();
-        return redirect('/account'); //->withSomething(['msg' => 'Page successfully deleted.'])
+    public function upload_profile_picture()
+    {
+        request()->validate([
+            'pf' => 'required|max:8192'
+        ]);
+
+        if (request()->hasFile('pf')) {
+
+            $user = User::findOrFail(auth()->user()->id);
+            if ($user->profile_picture != '') {
+                Storage::delete('public/'.$user->profile_picture);
+            }
+
+            $filename = sha1(auth()->user()->id.time()).'.png';
+            request()->file('pf')->storeAs('public/profile_pictures', $filename);
+
+
+            $user->profile_picture = 'profile_pictures/'.$filename;
+            $user->save();
+        }
+        return redirect('/account');
     }
 }

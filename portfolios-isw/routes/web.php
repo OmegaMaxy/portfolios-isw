@@ -39,9 +39,18 @@ Route::get('/faq', function() {
 Route::get('users', [Controllers\UserController::class, 'index']);
 Route::get('/profile/{username}', [Controllers\UserController::class, 'show']);
 
-Route::get('/account', [Controllers\AccountController::class, 'index'])->name('account');
+Route::resource('account.pages', Controllers\PageController::class)->only(['index', 'store', 'destroy']);
+
+/*Route::get('/account', [Controllers\AccountController::class, 'index'])->name('account');
 Route::post('/account/create-page', [Controllers\AccountController::class, 'create_page']);
-Route::delete('/account/delete-page/{pageId}', [Controllers\AccountController::class, 'delete_page']);
+Route::delete('/account/delete-page/{pageId}', [Controllers\AccountController::class, 'delete_page']);*/
+
+Route::get('/account', [Controllers\AccountController::class, 'index'])->name('account');
+Route::post('/account/upload-image', [Controllers\AccountController::class, 'upload_profile_picture']);
+Route::delete('/account/delete-image', [Controllers\AccountController::class, 'delete_profile_picture']);
+
+
+
 
 Route::get('/invite/{hash}', function($inviteHash) {
     return view('auth.register', compact('inviteHash'));

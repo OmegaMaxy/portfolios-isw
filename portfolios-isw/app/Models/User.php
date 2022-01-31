@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role_id',
         'email_address',
         'password',
+        'profile_picture',
     ];
 
     /**
@@ -77,5 +78,9 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+    public function pf() {
+        //dd($this->profile_picture);
+        return '/storage/'.$this->profile_picture;
     }
 }

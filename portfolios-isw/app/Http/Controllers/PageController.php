@@ -7,32 +7,39 @@ use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller
 {
-    // when entering a new url change isFirstTime value to false, and ENABLE the status ++ ??
-
-    public function show($userId)
+    public function index()
     {
-        $user = \App\Models\User::findOrFail($userId);
-        $page = $user->activePage();
-        return view('pages.show', ['page' => $page]);
-    }
-    public function create_with_userid($userId)
-    {
-        return view('pages.create_with_userid', ['userId' => $userId]);
+        $pages = auth()->user()->pages;
+        return view('account.pages', compact('pages'));
     }
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'user_id' => ['required', 'integer'],
             'page_url' => ['required', 'string'],
-            'status' => ['required', 'boolean']
         ]);
     }
     public function store()
     {
         $data = request()->all();
-        $this->validator($data)->validate();
 
+        $this->validator($data)->validate();
+        $data['user_id'] = auth()->user()->id;
+        $data['status'] = array_key_exists('status', $data);
+
+        // only one page can be active
+        $results = auth()->user()->pages->where('status', 1);
+        if ($results->count() > 0) return redirect('/account')->withErrors(['msg' => 'Only one page can be active!']);
         \App\Models\Page::create($data);
-        return redirect('/users/' . $data['user_id']);
+        return redirect('/account');
+    }
+    public function destroy($pageId)
+    {
+        $page = \App\Models\Page::findOrFail($pageId);
+        if ($page->user->id != auth()->user()->id) {
+            redirect('/account')->withErrors(['msg' => 'You are not authorized to delete that.']);
+        }
+
+        $page->delete();
+        return redirect('/account'); //->withSomething(['msg' => 'Page successfully deleted.'])
     }
 }
