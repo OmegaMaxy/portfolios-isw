@@ -9,6 +9,10 @@
         hr {
             background: {{ $user->foreground_color }};
         }
+        .btn.btn-outline-primary:hover {
+            color: inherit;
+            background: inherit;
+        }
     </style>
     <div class="container">
         <section class="mt-4 mb-4 d-flex">
@@ -17,7 +21,7 @@
             </div>
             <div style="align-self: center;">
                 <h2>{{ $user->fullname() }} aka {{ $user->username }}</h2>
-                <p>{{ $user->role->name }}</p>
+                <p class="btn btn-outline-primary" style="color: {{ $user->role->color }}">{{ $user->role->name }}</p>
             </div>
         </section>
         <section>

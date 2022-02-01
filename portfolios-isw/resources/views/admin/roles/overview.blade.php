@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach ($roles as $role)
                         <tr>
-                            <td>{{ $role->name }}<a href="{{ $role->linkPath() }}" class="ml-2 badge badge-primary">Details</a></td>
+                            <td style="color: {{ $role->color }};font-weight: bolder;">{{ $role->name }}<a href="{{ $role->linkPath() }}" class="ml-2 badge badge-primary">Details</a></td>
                             <td>{{ $role->userAmount() }} users</td>
                             <td>{{ $role->role_number }}</td>
                         </tr>

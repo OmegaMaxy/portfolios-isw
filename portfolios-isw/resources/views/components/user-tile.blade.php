@@ -4,7 +4,7 @@
 
         <div class="card-body">
             <h5 class="card-title">{{ $user->fullname() }}</h5>
-            <p class="card-text"><span class="text-secondary"> aka </span>{{ $user->username }} <label class="badge badge-primary">{{ $user->role->name }}</label></p>
+            <p class="card-text"><span class="text-secondary"> aka </span>{{ $user->username }} <label class="badge badge-secondary" style="background: {{ $user->role->color }}">{{ $user->role->name }}</label></p>
 
             <a href="/profile/{{ $user->username }}" class="btn btn-primary">View</a>
         </div>
