@@ -24,7 +24,9 @@
             <h3>Social Handles</h3>
             <div class="btn-group">
                 @foreach (auth()->user()->getHandles() as $handle)
-                    <a href="{{ $handle['url'] }}" class="btn btn-primary mr-3" style="{{ $handle['style'] }}">@svg($handle['icon']) <span style="vertical-align: middle;">{{ $handle['handle'] }}</span></a>
+                    @if ($handle['isEmpty'] == false)
+                        <a href="{{ $handle['url'] }}" class="btn btn-primary mr-3" style="{{ $handle['style'] }}">@svg($handle['icon']) <span style="vertical-align: middle;">{{ $handle['handle'] }}</span></a>
+                    @endif
                 @endforeach
             </div>
         </section>
