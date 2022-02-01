@@ -48,17 +48,37 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @auth
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            @if (auth()->user()->role->role_number == 1)
+                                <a class="nav-link text-primary" href="/admin">
+                                    Admin panel
+                                </a>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} • <span class="ml-2 badge badge-primary"><b>{{ auth()->user()->role->name }}</b> </span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="/profile/pages" class="dropdown-item">Customize portfolio</a>
+                                    <a href="/profile/customize" class="dropdown-item">Customize profile</a>
                                     <a href="/account" class="dropdown-item">Account</a>
+                                    <hr>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();" style="color: red;">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -67,7 +87,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endauth
+                        @endguest
                     </ul>
                 </div>
             </div>
