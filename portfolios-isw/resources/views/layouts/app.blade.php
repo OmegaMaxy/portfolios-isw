@@ -63,6 +63,11 @@
                                 </li>
                             @endif
                         @else
+                            @if (auth()->user()->role->role_number == 1)
+                                <a class="nav-link text-primary" href="/admin">
+                                    Admin panel
+                                </a>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} • <span class="ml-2 badge badge-primary"><b>{{ auth()->user()->role->name }}</b> </span>
