@@ -16,6 +16,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ot.css') }}" rel="stylesheet">
@@ -38,13 +40,10 @@
                             <a class="nav-link" href="{{ url('/') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('users/') }}">Users</a>
+                            <a class="nav-link" href="{{ url('/users') }}">Explore</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('roles/') }}">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('pages/') }}">Pages</a>
+                            <a class="nav-link" href="{{ url('/faq') }}">FAQ</a>
                         </li>
                     </ul>
 
@@ -64,15 +63,24 @@
                                 </li>
                             @endif
                         @else
+                            @if (auth()->user()->role->role_number == 1)
+                                <a class="nav-link text-primary" href="/admin">
+                                    Admin panel
+                                </a>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->username }} $ {{ auth()->user()->balance }} • <span class="text-success"><b>{{ auth()->user()->level }}</b> </span>
+                                    {{ Auth::user()->username }} • <span class="ml-2 badge badge-secondary" style="background: {{ auth()->user()->role->color }}"><b>{{ auth()->user()->role->name }}</b> </span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="/profile/pages" class="dropdown-item">Customize portfolio</a>
+                                    <a href="/profile/customize" class="dropdown-item">Customize profile</a>
+                                    <a href="/account" class="dropdown-item">Account</a>
+                                    <hr>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();" style="color: red;">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -95,5 +103,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>-->
+    @yield('javascript')
 </body>
 </html>

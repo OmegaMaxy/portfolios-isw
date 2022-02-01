@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <section class="container-fluid mt-3">
         <section>
-            <h3>Role Overview</h3>
+            <h3>Roles</h3>
         </section>
         <section>
             <table class="table table-striped">
@@ -17,14 +17,14 @@
                 <tbody>
                     @foreach ($roles as $role)
                         <tr>
-                            <td>{{ $role->name }}<a href="{{ $role->linkPath() }}" class="ml-2 badge badge-primary">Details</a></td>
+                            <td style="color: {{ $role->color }};font-weight: bolder;">{{ $role->name }}<a href="{{ $role->linkPath() }}" class="ml-2 badge badge-primary">Details</a></td>
                             <td>{{ $role->userAmount() }} users</td>
                             <td>{{ $role->role_number }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <a href="{{ url('/roles/create') }}" class="btn btn-primary">Add role</a>
+            <a href="{{ url('/admin/roles/create') }}" class="btn btn-primary">Add role</a>
         </section>
     </section>
 @endsection

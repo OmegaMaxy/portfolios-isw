@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Page;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -16,61 +20,28 @@ class UserController extends Controller
         $users = User::all();
         return view('users.overview', ['users' => $users]);
     }
-    public function show($userId)
+    public function show($username)
     {
-        $user = User::findOrFail($userId);
-        return view('users.show', ['user' => $user]);
-    }
-    public function validator(array $data)
-    {
-        return Validator::make($data, [
-            'username' => ['required', 'string', 'min:3', 'max:50', 'unique:users'],
-            'fname' => ['required', 'string', 'min:3', 'max:50'],
-            'lname' => ['required', 'string', 'min:3', 'max:50'],
-            'email_address' => ['required', 'min:1', 'unique:users'],
-            'role_id' => ['required', 'min:1'],
-            'password' => ['required', 'min:1'],
-        ]);
-    }
-    public function create()
-    {
-        $roles = \App\Models\Role::all();
-        return view('users.create', compact('roles'));
-    }
-    public function store()
-    {
-        $data = request()->all();
-        $this->validator($data)->validate();
-        $data['password'] = Hash::make($data['password']);
+        $user = User::where('username', $username)->get()->first();
+        if ($user == null) {
+            return abort(404);
+        }
+        $activePage = $user->activePage();
+        if ($activePage == null) {
+            // handle errors
+        }
 
-        $newUser = User::create($data);
-
-        Page::create(['user_id' => $newUser->id, 'page_url' => '/', 'status' => false]);
-
-        return redirect($newUser->linkPath());
-    }
-    public function edit($userId)
-    {
-        $user = User::findOrFail($userId);
-        return view('users.edit', compact($user));
-    }
-    public function update($userId)
-    {
-        $this->validator(request()->all())->validate();
-        $user = User::findOrFail($userId);
-        $user->username = request()['username'];
-        $user->fname = request()['fname'];
-        $user->lname = request()['lname'];
-        $user->email_address = request()['email_address'];
-        $user->role_id = request()['role_id'];
-        $user->password = Hash::make(request()['password']);
-        $user->save();
-        return redirect('/users/' . $userId);
-    }
-    public function destroy($userId)
-    {
-        // pages have to be deleted first
-        User::findOrFail($userId)->delete();
-        return redirect('/users/');
+        try {
+            $response = Http::get($activePage->page_url);
+        } catch (Exception $e) {
+            // handle errors
+            return redirect('/')->withErrors(['msg' => 'There is something wrong with this portfolio.']);
+        }
+        if (!$response->successful()) {
+            // handle errors
+        }
+        //dd($response->body());
+        $markdown_portfolio = $response->body();
+        return view('users.show', compact('user', 'markdown_portfolio'));
     }
 }

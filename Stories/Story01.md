@@ -11,5 +11,5 @@ Pros and cons of above:
 
 ### Stack
 The application will be built on Laravel for the administration of the pages.
-The pages will inherit the markdown portfolios from the members their github.
+The pages will inherit the markdown portfolios from the members their github or other sources, as long as the url returns a markdown file.
 

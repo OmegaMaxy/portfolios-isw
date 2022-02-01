@@ -8,6 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $users = \App\Models\User::all();
+        return view('home', compact('users'));
     }
 }

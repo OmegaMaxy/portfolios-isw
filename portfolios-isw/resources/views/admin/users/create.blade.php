@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -10,6 +10,10 @@
                 <div class="card-body">
                     <form method="POST" action="{{ url('users') }}">
                         @csrf
+
+                        @if($errors->any())
+                            {!! implode('', $errors->all('<div class="alert alert-danger" role="alert">:message</div>')) !!}
+                        @endif
 
                         <div class="form-group row">
                             <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>

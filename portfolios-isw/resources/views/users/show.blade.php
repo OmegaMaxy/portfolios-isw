@@ -1,53 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <section class="container-fluid mt-3">
-        <section>
-            <h3>Viewing a user</h3>
-        </section>
-        <section class="mt-4 mb-3">
-            <div class="card">
-                <div class="card-body"> <!-- max-width: 60%; on PC, leave default on mobile-->
-                    <h3>{{ $user->fullname() }} <div class="btn btn-default">Role: <span class="badge badge-primary">{{ $user->role->name }}</span></div></h3>
-                    <p>{{ $user->email_address }}</p>
-                    <hr/>
-                    @if ( $user->activePage() != null )
-                        <a href="{{ $user->activePage()->page_url }}" target="_blank" class="btn btn-primary">Visit user's page</a>
-                    @else
-                        <a href="#" class="btn btn-outline-danger">User has no active page</a>
-                    @endif
-                    <table class="table table-striped table-dark mt-4">
-                        <thead>
-                            <tr>
-                                <th>URL</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($user->pages as $page)
-                                <tr>
-                                    <td><a href='{{ $page->page_url }}' target='_blank'>{{ $page->page_url }}</a></td>
-                                    <td>
-                                        @if ($page->status)
-                                            <span class="ot-dot ot-green-dot"></span> Enabled
-                                        @else
-                                            <span class="ot-dot ot-red-dot"></span> Disabled
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <a href="{{ url($user->linkPath()) }}/page/add" class="btn btn-primary">Add page</a>
-                </div>
+    <style>
+        body {
+            background-color: {{ $user->background_color }};
+            color: {{ $user->foreground_color }};
+        }
+        hr {
+            background: {{ $user->foreground_color }};
+        }
+        .btn.btn-outline-primary:hover {
+            color: inherit;
+            background: inherit;
+        }
+    </style>
+    <div class="container">
+        <section class="mt-4 mb-4 d-flex">
+            <div class="mr-5">
+                <img src="{{ $user->pf() }}" class="img-thumbnail rounded" style="height: 150px;" alt="Profile Picture of {{ $user->username }}"/>
             </div>
-
+            <div style="align-self: center;">
+                <h2>{{ $user->fullname() }} aka {{ $user->username }}</h2>
+                <p class="btn btn-outline-primary" style="color: {{ $user->role->color }}">{{ $user->role->name }}</p>
+            </div>
         </section>
-        <form action="{{ url($user->linkPath()) }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger">Delete user</button>
-        </form>
-    </section>
+        <section>
+            <h3>Social Handles</h3>
+            <div class="btn-group">
+                @foreach (auth()->user()->getHandles() as $handle)
+                    @if ($handle['isEmpty'] == false)
+                        <a href="{{ $handle['url'] }}" class="btn btn-primary mr-3" style="{{ $handle['style'] }}">@svg($handle['icon']) <span style="vertical-align: middle;">{{ $handle['handle'] }}</span></a>
+                    @endif
+                @endforeach
+            </div>
+        </section>
+        <hr/>
+        <section class="mt-4">
+            @parsedown($markdown_portfolio)
+        </section>
+    </div>
 @endsection

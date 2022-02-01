@@ -26,6 +26,10 @@ class User extends Authenticatable
         'role_id',
         'email_address',
         'password',
+        'profile_picture',
+        'background_image',
+        'background_color',
+        'background_color',
     ];
 
     /**
@@ -50,9 +54,13 @@ class User extends Authenticatable
     {
         return "/users/" . $this->id;
     }
+    public function linkPathAdmin()
+    {
+        return "/admin/users/" . $this->id;
+    }
     public function fullname()
     {
-        return $this->fname . " " . $this->lname;
+        return ucfirst($this->fname) . " " . ucfirst($this->lname);
     }
     public function pages()
     {
@@ -67,11 +75,66 @@ class User extends Authenticatable
             })
             ->where('user_id', $this->id)
             ->where('status', '1')
-            ->first();
+            ->first(); // first() might give an error
         return $activePage;
     }
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+    public function pf() {
+        //dd($this->profile_picture);
+        if (empty($this->profile_picture)) return '/img/default_pf.png';
+        // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUHNoKb6n8cRAjyputJ9vn4OPdujzLJr52OQ&usqp=CAU
+        return '/storage/'.$this->profile_picture;
+    }
+    public function handles() {
+        return $this->hasOne(Handles::class);
+    }
+    public function getHandles() {
+        return [
+            'twitter' => [
+                'handle' => '@'.$this->handles['twitter_handle'],
+                'url' => 'https://twitter.com/' . $this->handles['twitter_handle'],
+                'icon' => 'bi-twitter',
+                'style' => 'background: #1DA1F2;border-color: #1DA1F2;border-radius: 4px;',
+                'isEmpty' => empty($this->handles['twitter_handle']),
+            ],
+            'linkedin' => [
+                'handle' => '@' . $this->handles['linkedin_handle'],
+                'url' => ' https://www.linkedin.com/in/' . $this->handles['linkedin_handle'],
+                'icon' => 'bi-linkedin',
+                'style' => 'background: #2867B2;border-color: #3490dc;border-radius: 4px;',
+                'isEmpty' => empty($this->handles['linkedin_handle']),
+            ],
+            'spotify' => [
+                'handle' => '@' . $this->handles['spotify_handle'],
+                'url' => 'https://open.spotify.com/user/' . $this->handles['spotify_handle'],
+                'icon' => 'bi-spotify',
+                'style' => 'background: #1DB954;border-color: #1DB954;border-radius: 4px;',
+                'isEmpty' => empty($this->handles['spotify_handle']),
+            ],
+            'discord' => [
+                'handle' => $this->handles['discord_handle'],
+                'url' => '#',
+                'icon' => 'bi-discord',
+                'style' => 'background: #7289DA;border-color: #7289DA;border-radius: 4px;',
+                'isEmpty' => empty($this->handles['discord_handle']),
+            ],
+            'github' => [
+                'handle' => '@' . $this->handles['github_handle'],
+                'url' => 'https://github.com/' . $this->handles['github_handle'],
+                'icon' => 'bi-github',
+                'style' => 'background: #161b22;border-color: #3490dc;border-radius: 4px;',
+                'isEmpty' => empty($this->handles['github_handle']),
+            ],
+            'website' => [
+                'handle' => $this->handles['website'],
+                'url' => 'https://'.$this->handles['website'],
+                'icon' => 'css-website',
+                'style' => 'background: #161b22;border-color: #3490dc;border-radius: 4px;',
+                'isEmpty' => empty($this->handles['website']),
+            ],
+        ];
     }
 }

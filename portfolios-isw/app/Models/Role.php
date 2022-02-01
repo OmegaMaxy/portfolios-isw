@@ -9,14 +9,18 @@ class Role extends Model
 {
     use HasFactory;
 
+    public $guarded = [];
+
+    const DEFAULT_COLOR = '#3490dc';
+
     public function userAmount()
     {
-        return User::where('role_id', $this->role_id)->get()->count();
+        return $this->users()->count();
     }
 
     public function linkPath()
     {
-        return "/roles/" . $this->id;
+        return "/admin/roles/" . $this->id;
     }
     public function users()
     {
