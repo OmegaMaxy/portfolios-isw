@@ -29,12 +29,14 @@ class RoleController extends \App\Http\Controllers\Controller
                 'name' => ['required', 'string', 'min:3', 'max:50', Rule::unique('roles')->ignore($data['id'])],
                 'role_number' => ['required', 'min:1', Rule::unique('roles')->ignore($data['id'])],
                 'description' => ['nullable', 'max: 255'],
+                'color' => ['required', 'max: 255'],
             ]);
         } else {
             return Validator::make($data, [
                 'name' => ['required', 'string', 'min:3', 'max:50', 'unique:roles'],
                 'role_number' => ['required', 'min:1', 'unique:roles'],
                 'description' => ['nullable', 'max: 255'],
+                'color' => ['required', 'max: 255'],
             ]);
         }
     }
@@ -70,7 +72,7 @@ class RoleController extends \App\Http\Controllers\Controller
 
         $role->name = request()['name'];
         $role->role_number = ($role->role_number == 1) ? 1 : request()['role_number'];
-
+        $role->color = request()['color'];
         $role->description = request()['description'];
         $role->save();
         return redirect('/admin/roles/' . $roleId);

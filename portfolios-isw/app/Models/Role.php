@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
+
     public $guarded = [];
+
+    const DEFAULT_COLOR = '#3490dc';
+
     public function userAmount()
     {
-        return User::where('role_id', $this->role_id)->get()->count();
+        return $this->users()->count();
     }
 
     public function linkPath()
