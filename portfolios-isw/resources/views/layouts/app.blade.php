@@ -72,9 +72,10 @@
                                     <a href="/profile/pages" class="dropdown-item">Customize portfolio</a>
                                     <a href="/profile/customize" class="dropdown-item">Customize profile</a>
                                     <a href="/account" class="dropdown-item">Account</a>
+                                    <hr>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();" style="color: red;">
                                         {{ __('Logout') }}
                                     </a>
 
