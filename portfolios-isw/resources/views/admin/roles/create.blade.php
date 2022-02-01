@@ -50,6 +50,20 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Role Color') }}</label>
+
+                            <div class="d-flex col-md-6">
+                                <div style="background: {{ \App\Models\Role::DEFAULT_COLOR }};width: 50px;margin-right: 1rem;border-radius: 4px;"></div>
+                                <input id="colorpicker" type="text" class="form-control @error('color') is-invalid @enderror" style="color: {{  \App\Models\Role::DEFAULT_COLOR }}" name="color" placeholder="{{  \App\Models\Role::DEFAULT_COLOR }}" autocomplete="off">
+
+                                @error('color')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
 
                         <div class="form-group row mb-0">

@@ -62,6 +62,21 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="color" class="">{{ __('Role Color') }}</label>
+
+                        <div class="d-flex">
+                            <div style="background: {{ \App\Models\Role::DEFAULT_COLOR }};width: 50px;margin-right: 1rem;border-radius: 4px;"></div>
+                            <input id="colorpicker" type="text" class="form-control @error('color') is-invalid @enderror" style="color: {{  $role->color }}" name="color" value="{{ $role->color }}" placeholder="{{  \App\Models\Role::DEFAULT_COLOR }}" autocomplete="off">
+
+                            @error('color')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
                     @method('PATCH')
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
