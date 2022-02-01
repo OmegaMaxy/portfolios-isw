@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Handles;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -75,12 +76,14 @@ class RegisterController extends Controller
         $role = DB::table('roles')->latest('created_at')->first();
         if ($role == null || $role->role_number == 1) return redirect('/register')->withErrors(['msg' => 'Signup failed. Administrator has not finished setting up this application. Please contact your administrator for furthur instructions.']);
         $lowest_role = $role->id;
-        return User::create([
+        $user = User::create([
             'username' => $data['username'],
             'fname' => $data['fname'],
             'lname' => $data['lname'],
             'role_id' => $lowest_role,
             'password' => Hash::make($data['password']),
         ]);
+        $handles = Handles::create(['user_id' => $user->id]);
+        return $user;
     }
 }
