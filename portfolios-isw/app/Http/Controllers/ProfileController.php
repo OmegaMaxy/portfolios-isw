@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Handles;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -68,17 +69,19 @@ class ProfileController extends Controller
         }
         return redirect('/profile/customize');
     }
-    public function change_background_color() {
+    public function change_colors() {
         $user = auth()->user();
 
         // business logic here
         request()->validate([
-            'background_color' => ['required', 'string', 'max:50'],
+            'background_color' => ['nullable', 'string', 'max:50'],
+            'foreground_color' => ['nullable', 'string', 'max:50'],
         ]);
 
         $user->background_color = request()['background_color'];
+        $user->foreground_color = request()['foreground_color'];
         $user->save();
-        return redirect('/profile/customize')->with('a', 'a');
+        return redirect('/profile/customize')->with('result', 'Saved colors!');
     }
 
     public function change_background_image()
@@ -93,5 +96,20 @@ class ProfileController extends Controller
         $user->background_color = request()['background_color'];
         $user->save();
         return redirect('/profile/customize')->with('a', 'a');
+    }
+
+    public function update_handle($handleName) {
+        $user = User::findOrFail(auth()->user()->id);
+        $handles = Handles::findOrFail($user->handles->id);
+
+        if ($handleName == 'website') {
+            $handles['website'] = request()['handle'];
+        } else {
+            $handles[$handleName . '_handle'] = request()['handle'];
+        }
+
+        $handles->save();
+
+        return redirect('/profile/customize')->with('result', 'Updated successfully.'); // or something with 'Saved'
     }
 }
