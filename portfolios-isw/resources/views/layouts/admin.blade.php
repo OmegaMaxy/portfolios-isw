@@ -61,6 +61,9 @@
                                 </li>
                             @endif
                         @else
+                            <a class="nav-link" href="/profile/{{ auth()->user()->username }}">
+                                Visit portfolio
+                            </a>
                             @if (auth()->user()->role->role_number == 1)
                                 <a class="nav-link text-primary" href="/admin">
                                     Admin panel
