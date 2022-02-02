@@ -1,5 +1,5 @@
 <div class="mr-2 mb-2">
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem;max-height: 23rem;min-height: 23rem;">
         <img class="card-img-top" src="{{ $user->pf() }}" alt="Profile Picture">
 
         <div class="card-body">
